@@ -1,0 +1,98 @@
+name: Build CS2Fixes RampbugFix Ubuntu2004 fallback
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'artifacts/**'
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-20.04
+    env:
+      HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampbugFix/sdk
+    steps:
+      - name: Install packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-setuptools build-essential clang
+
+      - name: Checkout build repo
+        uses: actions/checkout@v4
+        with:
+          path: buildrepo
+          persist-credentials: true
+
+      - name: Checkout RampbugFix
+        uses: actions/checkout@v4
+        with:
+          repository: Interesting-exe/CS2Fixes-RampbugFix
+          ref: main
+          path: CS2Fixes-RampbugFix
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Checkout Metamod 2.0.0.1469
+        uses: actions/checkout@v4
+        with:
+          repository: alliedmodders/metamod-source
+          ref: 2.0.0.1469
+          path: mmsource-2.0
+          submodules: recursive
+
+      - name: Checkout AMBuild
+        uses: actions/checkout@v4
+        with:
+          repository: alliedmodders/ambuild
+          path: ambuild
+
+      - name: Install AMBuild
+        shell: bash
+        run: |
+          cd ambuild
+          python3 setup.py install --user
+          cd ..
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build package
+        working-directory: CS2Fixes-RampbugFix
+        shell: bash
+        run: |
+          set +e
+          {
+            echo '=== env ==='
+            ldd --version | head -n1
+            echo "HL2SDKCS2=$HL2SDKCS2"
+            mkdir -p build
+            cd build
+            python3 ../configure.py --enable-optimize --sdks cs2
+            ambuild
+            find package -maxdepth 8 -type f -print -exec sha256sum {} \;
+            tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz .
+            sha256sum ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz.sha256
+          } 2>&1 | tee ../rampbugfix-ubuntu2004-build.log
+          exit ${PIPESTATUS[0]}
+
+      - name: Commit artifact or failure log
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p buildrepo/artifacts
+          if [ -f CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz ]; then cp CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz buildrepo/artifacts/; fi
+          if [ -f CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz.sha256 ]; then cp CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz.sha256 buildrepo/artifacts/; fi
+          if [ -f CS2Fixes-RampbugFix/rampbugfix-ubuntu2004-build.log ]; then cp CS2Fixes-RampbugFix/rampbugfix-ubuntu2004-build.log buildrepo/artifacts/; fi
+          cd buildrepo
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add artifacts || true
+          if git diff --cached --quiet; then
+            echo 'No artifact/log changes to commit.'
+          else
+            git commit -m 'Publish RampbugFix Ubuntu 20.04 build output'
+            git pull --rebase origin main
+            git push
+          fi

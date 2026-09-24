@@ -4,28 +4,28 @@
 Get:1 http://deb.debian.org/debian-security bullseye-security InRelease [27.1 kB]
 Hit:2 http://archive.debian.org/debian bullseye InRelease
 Hit:3 http://archive.debian.org/debian-debug bullseye-debug InRelease
-Get:4 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
-Get:5 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
-Get:6 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
+Get:4 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
+Get:5 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
+Get:6 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
 Get:7 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
-Get:8 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
-Get:9 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
-Get:10 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
-Get:11 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
-Get:12 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
-Get:13 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
-Get:14 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
-Get:15 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
-Get:16 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
-Get:17 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
-Get:18 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
-Get:19 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
-Get:20 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
-Get:21 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
-Get:22 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
-Get:23 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
-Get:24 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
-Fetched 3046 kB in 0s (8607 kB/s)
+Get:8 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
+Get:9 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
+Get:10 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
+Get:11 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
+Get:12 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
+Get:13 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
+Get:14 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
+Get:15 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
+Get:16 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:17 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
+Get:18 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
+Get:19 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
+Get:20 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
+Get:21 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
+Get:22 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
+Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
+Get:24 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
+Fetched 3046 kB in 1s (2598 kB/s)
 Reading package lists...
 + apt-get install -y --no-install-recommends clang-16 python3-setuptools
 Reading package lists...
@@ -52,7 +52,7 @@ Get:3 http://archive.debian.org/debian bullseye/main amd64 libclang-common-16-de
 Get:4 http://archive.debian.org/debian bullseye/main amd64 llvm-16-linker-tools amd64 1:16.0.6-15~deb11u2 [1258 kB]
 Get:5 http://archive.debian.org/debian bullseye/main amd64 libclang1-16 amd64 1:16.0.6-15~deb11u2 [6575 kB]
 Get:6 http://archive.debian.org/debian bullseye/main amd64 clang-16 amd64 1:16.0.6-15~deb11u2 [137 kB]
-Fetched 43.2 MB in 0s (107 MB/s)
+Fetched 43.2 MB in 0s (97.5 MB/s)
 Selecting previously unselected package libllvm16:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 60867 files and directories currently installed.)
 Preparing to unpack .../0-libllvm16_1%3a16.0.6-15~deb11u2_amd64.deb ...
@@ -82,9 +82,381 @@ Processing triggers for man-db (2.9.4-2) ...
 Processing triggers for libc-bin (2.31-13+deb11u14) ...
 + ln -sf /usr/bin/clang-16 /usr/bin/clang
 + ln -sf /usr/bin/clang++-16 /usr/bin/clang++
-+ cd /__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/ambuild
-/__w/_temp/bd78da8f-0dc2-4ab5-a4eb-7fef4ebd4c46.sh: line 9: cd: /__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/ambuild: No such file or directory
++ '[' '!' -f /__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/ambuild-source/setup.py ']'
++ test -f /__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/ambuild-source/setup.py
++ cd /__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/ambuild-source
 + python3 setup.py install --user
-python3: can't open file '/__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/setup.py': [Errno 2] No such file or directory
-+ command -v ambuild
+running install
+running bdist_egg
+running egg_info
+creating AMBuild.egg-info
+writing AMBuild.egg-info/PKG-INFO
+writing dependency_links to AMBuild.egg-info/dependency_links.txt
+writing entry points to AMBuild.egg-info/entry_points.txt
+writing top-level names to AMBuild.egg-info/top_level.txt
+writing manifest file 'AMBuild.egg-info/SOURCES.txt'
+reading manifest file 'AMBuild.egg-info/SOURCES.txt'
+writing manifest file 'AMBuild.egg-info/SOURCES.txt'
+installing library code to build/bdist.linux-x86_64/egg
+running install_lib
+running build_py
+creating build
+creating build/lib
+creating build/lib/ambuild
+copying ambuild/cpp.py -> build/lib/ambuild
+copying ambuild/job.py -> build/lib/ambuild
+copying ambuild/worker.py -> build/lib/ambuild
+copying ambuild/command.py -> build/lib/ambuild
+copying ambuild/osutil.py -> build/lib/ambuild
+copying ambuild/runner.py -> build/lib/ambuild
+copying ambuild/__init__.py -> build/lib/ambuild
+copying ambuild/cache.py -> build/lib/ambuild
+creating build/lib/ambuild2
+copying ambuild2/database.py -> build/lib/ambuild2
+copying ambuild2/damage.py -> build/lib/ambuild2
+copying ambuild2/make_parser.py -> build/lib/ambuild2
+copying ambuild2/task.py -> build/lib/ambuild2
+copying ambuild2/run.py -> build/lib/ambuild2
+copying ambuild2/builder.py -> build/lib/ambuild2
+copying ambuild2/context.py -> build/lib/ambuild2
+copying ambuild2/util.py -> build/lib/ambuild2
+copying ambuild2/__init__.py -> build/lib/ambuild2
+copying ambuild2/graph.py -> build/lib/ambuild2
+copying ambuild2/process_manager.py -> build/lib/ambuild2
+copying ambuild2/nodetypes.py -> build/lib/ambuild2
+creating build/lib/ambuild2/frontend
+copying ambuild2/frontend/paths.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/paths_test.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/cloneable_test.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/version.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/base_generator.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/proxy_test.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/system.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/proxy.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/context_manager.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/cloneable.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/__init__.py -> build/lib/ambuild2/frontend
+copying ambuild2/frontend/amb2_gen.py -> build/lib/ambuild2/frontend
+creating build/lib/ambuild2/frontend/v2_1
+copying ambuild2/frontend/v2_1/prep.py -> build/lib/ambuild2/frontend/v2_1
+copying ambuild2/frontend/v2_1/context.py -> build/lib/ambuild2/frontend/v2_1
+copying ambuild2/frontend/v2_1/context_manager.py -> build/lib/ambuild2/frontend/v2_1
+copying ambuild2/frontend/v2_1/__init__.py -> build/lib/ambuild2/frontend/v2_1
+copying ambuild2/frontend/v2_1/amb2_gen.py -> build/lib/ambuild2/frontend/v2_1
+creating build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/cpp_utils.py -> build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/cpp_rules.py -> build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/msvc_utils.py -> build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/verify.py -> build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/__init__.py -> build/lib/ambuild2/frontend/cpp
+copying ambuild2/frontend/cpp/cpp_rules_test.py -> build/lib/ambuild2/frontend/cpp
+creating build/lib/ambuild2/frontend/vs
+copying ambuild2/frontend/vs/nodes.py -> build/lib/ambuild2/frontend/vs
+copying ambuild2/frontend/vs/gen.py -> build/lib/ambuild2/frontend/vs
+copying ambuild2/frontend/vs/xmlbuilder.py -> build/lib/ambuild2/frontend/vs
+copying ambuild2/frontend/vs/__init__.py -> build/lib/ambuild2/frontend/vs
+creating build/lib/ambuild2/frontend/v2_2
+copying ambuild2/frontend/v2_2/prep.py -> build/lib/ambuild2/frontend/v2_2
+copying ambuild2/frontend/v2_2/context.py -> build/lib/ambuild2/frontend/v2_2
+copying ambuild2/frontend/v2_2/context_manager.py -> build/lib/ambuild2/frontend/v2_2
+copying ambuild2/frontend/v2_2/__init__.py -> build/lib/ambuild2/frontend/v2_2
+copying ambuild2/frontend/v2_2/amb2_gen.py -> build/lib/ambuild2/frontend/v2_2
+creating build/lib/ambuild2/frontend/v2_0
+copying ambuild2/frontend/v2_0/prep.py -> build/lib/ambuild2/frontend/v2_0
+copying ambuild2/frontend/v2_0/context.py -> build/lib/ambuild2/frontend/v2_0
+copying ambuild2/frontend/v2_0/context_manager.py -> build/lib/ambuild2/frontend/v2_0
+copying ambuild2/frontend/v2_0/__init__.py -> build/lib/ambuild2/frontend/v2_0
+copying ambuild2/frontend/v2_0/amb2_gen.py -> build/lib/ambuild2/frontend/v2_0
+creating build/lib/ambuild2/frontend/v2_1/tools
+copying ambuild2/frontend/v2_1/tools/fxc.py -> build/lib/ambuild2/frontend/v2_1/tools
+copying ambuild2/frontend/v2_1/tools/__init__.py -> build/lib/ambuild2/frontend/v2_1/tools
+creating build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/vendor.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/compiler.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/detect.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/sunpro.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/builders.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/gcc.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/__init__.py -> build/lib/ambuild2/frontend/v2_1/cpp
+copying ambuild2/frontend/v2_1/cpp/msvc.py -> build/lib/ambuild2/frontend/v2_1/cpp
+creating build/lib/ambuild2/frontend/v2_1/vs
+copying ambuild2/frontend/v2_1/vs/nodes.py -> build/lib/ambuild2/frontend/v2_1/vs
+copying ambuild2/frontend/v2_1/vs/gen.py -> build/lib/ambuild2/frontend/v2_1/vs
+copying ambuild2/frontend/v2_1/vs/export_vcxproj.py -> build/lib/ambuild2/frontend/v2_1/vs
+copying ambuild2/frontend/v2_1/vs/cxx.py -> build/lib/ambuild2/frontend/v2_1/vs
+copying ambuild2/frontend/v2_1/vs/__init__.py -> build/lib/ambuild2/frontend/v2_1/vs
+creating build/lib/ambuild2/frontend/v2_2/tools
+copying ambuild2/frontend/v2_2/tools/protoc.py -> build/lib/ambuild2/frontend/v2_2/tools
+copying ambuild2/frontend/v2_2/tools/fxc.py -> build/lib/ambuild2/frontend/v2_2/tools
+copying ambuild2/frontend/v2_2/tools/__init__.py -> build/lib/ambuild2/frontend/v2_2/tools
+creating build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/vendor.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/compiler.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/detect.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/deptypes.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/builders.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/gcc.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/__init__.py -> build/lib/ambuild2/frontend/v2_2/cpp
+copying ambuild2/frontend/v2_2/cpp/msvc.py -> build/lib/ambuild2/frontend/v2_2/cpp
+creating build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/nodes.py -> build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/gen.py -> build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/export_vcxproj.py -> build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/custom_tools.py -> build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/cxx.py -> build/lib/ambuild2/frontend/v2_2/vs
+copying ambuild2/frontend/v2_2/vs/__init__.py -> build/lib/ambuild2/frontend/v2_2/vs
+creating build/lib/ambuild2/frontend/v2_0/cpp
+copying ambuild2/frontend/v2_0/cpp/detect.py -> build/lib/ambuild2/frontend/v2_0/cpp
+copying ambuild2/frontend/v2_0/cpp/compilers.py -> build/lib/ambuild2/frontend/v2_0/cpp
+copying ambuild2/frontend/v2_0/cpp/builders.py -> build/lib/ambuild2/frontend/v2_0/cpp
+copying ambuild2/frontend/v2_0/cpp/__init__.py -> build/lib/ambuild2/frontend/v2_0/cpp
+copying ambuild2/frontend/v2_0/cpp/vendors.py -> build/lib/ambuild2/frontend/v2_0/cpp
+creating build/lib/ambuild2/frontend/v2_0/vs
+copying ambuild2/frontend/v2_0/vs/gen.py -> build/lib/ambuild2/frontend/v2_0/vs
+copying ambuild2/frontend/v2_0/vs/export_vcxproj.py -> build/lib/ambuild2/frontend/v2_0/vs
+copying ambuild2/frontend/v2_0/vs/cxx.py -> build/lib/ambuild2/frontend/v2_0/vs
+copying ambuild2/frontend/v2_0/vs/__init__.py -> build/lib/ambuild2/frontend/v2_0/vs
+creating build/bdist.linux-x86_64
+creating build/bdist.linux-x86_64/egg
+creating build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/cpp.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/job.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/worker.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/command.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/osutil.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/runner.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/__init__.py -> build/bdist.linux-x86_64/egg/ambuild
+copying build/lib/ambuild/cache.py -> build/bdist.linux-x86_64/egg/ambuild
+creating build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/database.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/damage.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/make_parser.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/task.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/run.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/builder.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/context.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/util.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/graph.py -> build/bdist.linux-x86_64/egg/ambuild2
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/paths.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/paths_test.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/cloneable_test.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/version.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/base_generator.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+copying build/lib/ambuild2/frontend/v2_1/prep.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/tools
+copying build/lib/ambuild2/frontend/v2_1/tools/fxc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/tools
+copying build/lib/ambuild2/frontend/v2_1/tools/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/tools
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/vendor.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/compiler.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/detect.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/sunpro.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/builders.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/gcc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+copying build/lib/ambuild2/frontend/v2_1/cpp/msvc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/vs/nodes.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/vs/gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/vs/export_vcxproj.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/vs/cxx.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/vs/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs
+copying build/lib/ambuild2/frontend/v2_1/context.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+copying build/lib/ambuild2/frontend/v2_1/context_manager.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+copying build/lib/ambuild2/frontend/v2_1/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+copying build/lib/ambuild2/frontend/v2_1/amb2_gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1
+copying build/lib/ambuild2/frontend/proxy_test.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/cpp_utils.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/cpp_rules.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/msvc_utils.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/verify.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/cpp/cpp_rules_test.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp
+copying build/lib/ambuild2/frontend/system.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/vs
+copying build/lib/ambuild2/frontend/vs/nodes.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/vs
+copying build/lib/ambuild2/frontend/vs/gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/vs
+copying build/lib/ambuild2/frontend/vs/xmlbuilder.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/vs
+copying build/lib/ambuild2/frontend/vs/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/vs
+copying build/lib/ambuild2/frontend/proxy.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/context_manager.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/cloneable.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+copying build/lib/ambuild2/frontend/v2_2/prep.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools
+copying build/lib/ambuild2/frontend/v2_2/tools/protoc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools
+copying build/lib/ambuild2/frontend/v2_2/tools/fxc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools
+copying build/lib/ambuild2/frontend/v2_2/tools/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/vendor.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/compiler.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/detect.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/deptypes.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/builders.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/gcc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+copying build/lib/ambuild2/frontend/v2_2/cpp/msvc.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/nodes.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/export_vcxproj.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/custom_tools.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/cxx.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/vs/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs
+copying build/lib/ambuild2/frontend/v2_2/context.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+copying build/lib/ambuild2/frontend/v2_2/context_manager.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+copying build/lib/ambuild2/frontend/v2_2/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+copying build/lib/ambuild2/frontend/v2_2/amb2_gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2
+copying build/lib/ambuild2/frontend/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+copying build/lib/ambuild2/frontend/amb2_gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+copying build/lib/ambuild2/frontend/v2_0/prep.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+copying build/lib/ambuild2/frontend/v2_0/cpp/detect.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+copying build/lib/ambuild2/frontend/v2_0/cpp/compilers.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+copying build/lib/ambuild2/frontend/v2_0/cpp/builders.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+copying build/lib/ambuild2/frontend/v2_0/cpp/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+copying build/lib/ambuild2/frontend/v2_0/cpp/vendors.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp
+creating build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs
+copying build/lib/ambuild2/frontend/v2_0/vs/gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs
+copying build/lib/ambuild2/frontend/v2_0/vs/export_vcxproj.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs
+copying build/lib/ambuild2/frontend/v2_0/vs/cxx.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs
+copying build/lib/ambuild2/frontend/v2_0/vs/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs
+copying build/lib/ambuild2/frontend/v2_0/context.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+copying build/lib/ambuild2/frontend/v2_0/context_manager.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+copying build/lib/ambuild2/frontend/v2_0/__init__.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+copying build/lib/ambuild2/frontend/v2_0/amb2_gen.py -> build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0
+copying build/lib/ambuild2/process_manager.py -> build/bdist.linux-x86_64/egg/ambuild2
+copying build/lib/ambuild2/nodetypes.py -> build/bdist.linux-x86_64/egg/ambuild2
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/cpp.py to cpp.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/job.py to job.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/worker.py to worker.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/command.py to command.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/osutil.py to osutil.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/runner.py to runner.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild/cache.py to cache.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/database.py to database.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/damage.py to damage.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/make_parser.py to make_parser.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/task.py to task.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/run.py to run.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/builder.py to builder.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/context.py to context.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/util.py to util.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/graph.py to graph.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/paths.py to paths.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/paths_test.py to paths_test.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cloneable_test.py to cloneable_test.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/version.py to version.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/base_generator.py to base_generator.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/prep.py to prep.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/tools/fxc.py to fxc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/tools/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/vendor.py to vendor.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/compiler.py to compiler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/detect.py to detect.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/sunpro.py to sunpro.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/builders.py to builders.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/gcc.py to gcc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/cpp/msvc.py to msvc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs/nodes.py to nodes.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs/gen.py to gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs/export_vcxproj.py to export_vcxproj.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs/cxx.py to cxx.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/vs/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/context.py to context.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/context_manager.py to context_manager.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_1/amb2_gen.py to amb2_gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/proxy_test.py to proxy_test.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/cpp_utils.py to cpp_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/cpp_rules.py to cpp_rules.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/msvc_utils.py to msvc_utils.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/verify.py to verify.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cpp/cpp_rules_test.py to cpp_rules_test.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/system.py to system.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/vs/nodes.py to nodes.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/vs/gen.py to gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/vs/xmlbuilder.py to xmlbuilder.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/vs/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/proxy.py to proxy.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/context_manager.py to context_manager.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/cloneable.py to cloneable.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/prep.py to prep.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools/protoc.py to protoc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools/fxc.py to fxc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/tools/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/vendor.py to vendor.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/compiler.py to compiler.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/detect.py to detect.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/deptypes.py to deptypes.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/builders.py to builders.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/gcc.py to gcc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/cpp/msvc.py to msvc.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/nodes.py to nodes.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/gen.py to gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/export_vcxproj.py to export_vcxproj.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/custom_tools.py to custom_tools.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/cxx.py to cxx.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/vs/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/context.py to context.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/context_manager.py to context_manager.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_2/amb2_gen.py to amb2_gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/amb2_gen.py to amb2_gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/prep.py to prep.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp/detect.py to detect.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp/compilers.py to compilers.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp/builders.py to builders.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/cpp/vendors.py to vendors.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs/gen.py to gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs/export_vcxproj.py to export_vcxproj.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs/cxx.py to cxx.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/vs/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/context.py to context.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/context_manager.py to context_manager.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/__init__.py to __init__.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/frontend/v2_0/amb2_gen.py to amb2_gen.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/process_manager.py to process_manager.cpython-39.pyc
+byte-compiling build/bdist.linux-x86_64/egg/ambuild2/nodetypes.py to nodetypes.cpython-39.pyc
+creating build/bdist.linux-x86_64/egg/EGG-INFO
+installing scripts to build/bdist.linux-x86_64/egg/EGG-INFO/scripts
+running install_scripts
+running build_scripts
+creating build/scripts-3.9
+copying scripts/ambuild_objcopy_wrapper.sh -> build/scripts-3.9
+creating build/bdist.linux-x86_64/egg/EGG-INFO/scripts
+copying build/scripts-3.9/ambuild_objcopy_wrapper.sh -> build/bdist.linux-x86_64/egg/EGG-INFO/scripts
+changing mode of build/bdist.linux-x86_64/egg/EGG-INFO/scripts/ambuild_objcopy_wrapper.sh to 755
+copying AMBuild.egg-info/PKG-INFO -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying AMBuild.egg-info/SOURCES.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying AMBuild.egg-info/dependency_links.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying AMBuild.egg-info/entry_points.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying AMBuild.egg-info/not-zip-safe -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying AMBuild.egg-info/top_level.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+creating dist
+creating 'dist/AMBuild-2.0-py3.9.egg' and adding 'build/bdist.linux-x86_64/egg' to it
+removing 'build/bdist.linux-x86_64/egg' (and everything under it)
+Processing AMBuild-2.0-py3.9.egg
+creating /github/home/.local/lib/python3.9/site-packages/AMBuild-2.0-py3.9.egg
+Extracting AMBuild-2.0-py3.9.egg to /github/home/.local/lib/python3.9/site-packages
+Adding AMBuild 2.0 to easy-install.pth file
+Installing ambuild_objcopy_wrapper.sh script to /github/home/.local/bin
+Installing ambuild script to /github/home/.local/bin
+
+Installed /github/home/.local/lib/python3.9/site-packages/AMBuild-2.0-py3.9.egg
+Processing dependencies for AMBuild==2.0
+Finished processing dependencies for AMBuild==2.0
++ test -x /github/home/.local/bin/ambuild
 + echo /github/home/.local/bin

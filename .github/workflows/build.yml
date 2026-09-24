@@ -77,16 +77,49 @@ jobs:
       - name: Install AMBuild and clang
         shell: bash
         run: |
-          set +e
-          { apt-get update; apt-get install -y --no-install-recommends clang-16 python3-setuptools; ln -sf /usr/bin/clang-16 /usr/bin/clang; ln -sf /usr/bin/clang++-16 /usr/bin/clang++; test -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" || { rm -rf "$GITHUB_WORKSPACE/ambuild-source"; git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"; }; cd "$GITHUB_WORKSPACE/ambuild-source"; python3 setup.py install --user; test -x "$HOME/.local/bin/ambuild"; echo "$HOME/.local/bin" >> "$GITHUB_PATH"; } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
-          exit ${PIPESTATUS[0]}
+          set -Eeuo pipefail
+          {
+            apt-get update
+            apt-get install -y --no-install-recommends clang-16 python3-setuptools
+            ln -sf /usr/bin/clang-16 /usr/bin/clang
+            ln -sf /usr/bin/clang++-16 /usr/bin/clang++
+            if [ ! -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" ]; then
+              rm -rf "$GITHUB_WORKSPACE/ambuild-source"
+              git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"
+            fi
+            cd "$GITHUB_WORKSPACE/ambuild-source"
+            python3 setup.py install --user
+            test -x "$HOME/.local/bin/ambuild"
+            echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
       - name: Build package
         working-directory: CS2Fixes-RampBugFix
         shell: bash
         run: |
-          set +e
-          { export PATH="$HOME/.local/bin:$PATH"; rm -rf build; mkdir -p build; cd build; python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64; command -v ambuild; ambuild; while IFS= read -r candidate; do if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64; cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; break; fi; done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print); test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'; tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .; sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256; tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | sed 's#^\./##' | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
-          exit ${PIPESTATUS[0]}
+          set -Eeuo pipefail
+          {
+            export PATH="$HOME/.local/bin:$PATH"
+            rm -rf build
+            mkdir -p build
+            cd build
+            python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64
+            command -v ambuild
+            ambuild
+
+            while IFS= read -r candidate; do
+              if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then
+                mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64
+                cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
+                break
+              fi
+            done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print)
+
+            test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
+            file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'
+            tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .
+            sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256
+            tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | sed 's#^\./##' | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'
+          } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4

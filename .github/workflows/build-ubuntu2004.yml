@@ -51,7 +51,6 @@ jobs:
           path: ambuild
 
       - name: Install AMBuild
-        shell: bash
         run: |
           cd ambuild
           python3 setup.py install --user
@@ -69,9 +68,11 @@ jobs:
             echo "HL2SDKCS2=$HL2SDKCS2"
             mkdir -p build
             cd build
-            python3 ../configure.py --enable-optimize --sdks cs2
+            python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64
             ambuild
+            find . -maxdepth 6 -type f -name '*rampbugfix*' -print -exec file {} \; -exec sha256sum {} \;
             find package -maxdepth 8 -type f -print -exec sha256sum {} \;
+            test -f package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
             tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz .
             sha256sum ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-ubuntu2004.tar.gz.sha256
           } 2>&1 | tee ../rampbugfix-ubuntu2004-build.log

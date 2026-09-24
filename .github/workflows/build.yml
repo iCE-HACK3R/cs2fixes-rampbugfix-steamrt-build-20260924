@@ -84,7 +84,6 @@ jobs:
           source = Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp')
           text = source.read_text()
           text = text.replace('#include "cs2fixes.h"\n', '#include "cs2fixes.h"\n#include <khook.hpp>\n', 1)
-
           declarations = '''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
           using StartupServerHook = KHook::Virtual<INetworkServerService, void, const GameSessionConfiguration_t&, ISource2WorldSession*, const char *>;
 
@@ -105,15 +104,15 @@ jobs:
           text, count = re.subn(r'SH_DECL_HOOK4_void\([^;]+;\s*SH_DECL_HOOK3_void\([^;]+;', declarations, text, count=1, flags=re.S)
           if count != 1:
               raise SystemExit('SourceHook declarations were not found')
-
           text, count = re.subn(r'SH_ADD_HOOK\(IServerGameClients,[^;]+;\s*SH_ADD_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Add(g_pSource2GameClients);\n\tg_startupServerHook.Add(g_pNetworkServerService);', text, count=1, flags=re.S)
           if count != 1:
               raise SystemExit('SourceHook add calls were not found')
-
           text, count = re.subn(r'SH_REMOVE_HOOK\(IServerGameClients,[^;]+;\s*SH_REMOVE_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Remove(g_pSource2GameClients);\n\tg_startupServerHook.Remove(g_pNetworkServerService);', text, count=1, flags=re.S)
           if count != 1:
               raise SystemExit('SourceHook remove calls were not found')
-
+          text, count = re.subn(r'\n\s*if \(g_iCGamePlayerEquipUseId != -1\)\s*\n\s*SH_REMOVE_HOOK_ID\(g_iCGamePlayerEquipUseId\);', '', text, count=1)
+          if count != 1:
+              raise SystemExit('Legacy SourceHook ID cleanup was not found')
           source.write_text(text)
           PY
 

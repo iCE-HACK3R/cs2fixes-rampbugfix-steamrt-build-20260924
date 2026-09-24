@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
     env:
-      HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampbugFix/sdk
+      HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampBugFix/sdk
     steps:
       - name: Checkout build repo
         uses: actions/checkout@v4
@@ -30,9 +30,9 @@ jobs:
       - name: Checkout RampbugFix
         uses: actions/checkout@v4
         with:
-          repository: Interesting-exe/CS2Fixes-RampbugFix
+          repository: Interesting-exe/CS2Fixes-RampBugFix
           ref: main
-          path: CS2Fixes-RampbugFix
+          path: CS2Fixes-RampBugFix
           submodules: recursive
           fetch-depth: 0
 
@@ -63,7 +63,7 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Build package
-        working-directory: CS2Fixes-RampbugFix
+        working-directory: CS2Fixes-RampBugFix
         shell: bash
         run: |
           set +e
@@ -77,12 +77,13 @@ jobs:
             cd build
             python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64
             ambuild
-            find . -maxdepth 6 -type f -name '*rampbugfix*' -print -exec file {} \; -exec sha256sum {} \;
-            find package -maxdepth 8 -type f -print -exec sha256sum {} \;
-            test -f package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
-            file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
-            tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
-            sha256sum ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+            find . -maxdepth 8 -type f -name '*rampbugfix*' -print -exec file {} \\; -exec sha256sum {} \\;
+            find package -maxdepth 8 -type f -print -exec sha256sum {} \\;
+            test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
+            file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'
+            tar -C package -czf ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
+            sha256sum ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+            tar -tzf ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'
           } 2>&1 | tee ../rampbugfix-build.log
           exit ${PIPESTATUS[0]}
 
@@ -91,9 +92,11 @@ jobs:
         shell: bash
         run: |
           mkdir -p buildrepo/artifacts
-          if [ -f CS2Fixes-RampbugFix-abi18-steamrt.tar.gz ]; then cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/; fi
-          if [ -f CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 ]; then cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/; fi
-          if [ -f CS2Fixes-RampbugFix/rampbugfix-build.log ]; then cp CS2Fixes-RampbugFix/rampbugfix-build.log buildrepo/artifacts/; fi
+          if [ -s CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz ] && tar -tzf CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then
+            cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/
+            cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/
+          fi
+          if [ -f CS2Fixes-RampBugFix/rampbugfix-build.log ]; then cp CS2Fixes-RampBugFix/rampbugfix-build.log buildrepo/artifacts/; fi
           cd buildrepo
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

@@ -1,0 +1,234 @@
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ for attempt in 1 2 3
++ apt-get update
+Get:1 http://deb.debian.org/debian-security bullseye-security InRelease [27.1 kB]
+Get:2 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
+Get:3 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
+Get:4 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
+Get:5 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
+Get:6 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
+Get:7 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
+Get:8 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
+Get:9 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
+Get:10 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
+Get:11 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
+Hit:12 http://archive.debian.org/debian bullseye InRelease
+Get:13 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
+Get:14 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
+Get:15 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
+Hit:16 http://archive.debian.org/debian-debug bullseye-debug InRelease
+Get:17 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:18 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
+Get:19 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
+Get:20 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
+Get:21 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
+Get:22 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
+Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
+Get:24 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
+Fetched 3046 kB in 1s (2649 kB/s)
+Reading package lists...
++ apt-get install -y --no-install-recommends clang-16 python3-setuptools python3-pip
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-setuptools is already the newest version (52.0.0-4+deb11u2).
+python3-setuptools set to manually installed.
+The following additional packages will be installed:
+  libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-wheel
+Suggested packages:
+  clang-16-doc wasi-libc
+Recommended packages:
+  llvm-16-dev libclang-rt-16-dev python3-dev
+The following NEW packages will be installed:
+  clang-16 libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-pip python3-wheel
+0 upgraded, 9 newly installed, 0 to remove and 10 not upgraded.
+Need to get 45.5 MB of archives.
+After this operation, 242 MB of additional disk space will be used.
+Ign:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+Ign:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+Err:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Err:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Get:3 http://archive.debian.org/debian bullseye/main amd64 libllvm16 amd64 1:16.0.6-15~deb11u2 [23.0 MB]
+Get:4 http://archive.debian.org/debian bullseye/main amd64 libclang-cpp16 amd64 1:16.0.6-15~deb11u2 [11.5 MB]
+Get:5 http://archive.debian.org/debian bullseye/main amd64 libclang-common-16-dev all 1:16.0.6-15~deb11u2 [683 kB]
+Get:6 http://archive.debian.org/debian bullseye/main amd64 llvm-16-linker-tools amd64 1:16.0.6-15~deb11u2 [1258 kB]
+Get:7 http://archive.debian.org/debian bullseye/main amd64 libclang1-16 amd64 1:16.0.6-15~deb11u2 [6575 kB]
+Get:8 http://archive.debian.org/debian bullseye/main amd64 clang-16 amd64 1:16.0.6-15~deb11u2 [137 kB]
+Get:9 http://archive.debian.org/debian bullseye/main amd64 python3-wheel all 0.34.2-1 [24.0 kB]
+Fetched 43.2 MB in 0s (88.4 MB/s)
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python-pip-whl_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python3-pip_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
++ '[' 1 = 3 ']'
++ rm -rf /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_InRelease /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_main_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_InRelease /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_source_Sources.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_source_Sources.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_source_Sources.lz4 /var/lib/apt/lists/auxfiles /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_InRelease /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_main_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_non-free_binary-amd64_Packages /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_non-free_binary-i386_Packages /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_InRelease /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_source_Sources.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_source_Sources.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_source_Sources.lz4 /var/lib/apt/lists/lock /var/lib/apt/lists/partial /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_InRelease /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_main_binary-i386_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_InRelease /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_binary-i386_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_source_Sources.lz4
++ for attempt in 1 2 3
++ apt-get update
+Get:1 http://deb.debian.org/debian-security bullseye-security InRelease [27.1 kB]
+Get:2 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
+Get:3 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
+Get:4 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
+Get:5 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
+Get:6 http://archive.debian.org/debian bullseye InRelease [116 kB]
+Get:7 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
+Get:8 http://archive.debian.org/debian-debug bullseye-debug InRelease [37.6 kB]
+Get:9 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
+Get:10 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
+Get:11 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
+Get:12 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
+Get:13 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
+Get:14 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
+Get:15 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
+Get:16 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
+Get:17 http://deb.debian.org/debian-security-debug bullseye-security-debug/non-free amd64 Packages [708 B]
+Get:18 http://archive.debian.org/debian bullseye/main Sources [11.4 MB]
+Get:19 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
+Get:20 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
+Get:21 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:22 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
+Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
+Get:24 http://archive.debian.org/debian bullseye/non-free Sources [98.1 kB]
+Get:25 http://archive.debian.org/debian bullseye/contrib Sources [51.5 kB]
+Get:26 http://archive.debian.org/debian bullseye/non-free amd64 Packages [121 kB]
+Get:27 http://archive.debian.org/debian bullseye/main i386 Packages [11.0 MB]
+Get:28 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
+Get:29 http://deb.debian.org/debian-security-debug bullseye-security-debug/non-free i386 Packages [844 B]
+Get:30 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
+Get:31 http://archive.debian.org/debian bullseye/non-free i386 Packages [96.6 kB]
+Get:32 http://archive.debian.org/debian bullseye/contrib i386 Packages [54.3 kB]
+Get:33 http://archive.debian.org/debian bullseye/main amd64 Packages [11.1 MB]
+Get:34 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
+Get:35 http://archive.debian.org/debian bullseye/contrib amd64 Packages [61.0 kB]
+Get:36 http://archive.debian.org/debian-debug bullseye-debug/contrib amd64 Packages [33.9 kB]
+Get:37 http://archive.debian.org/debian-debug bullseye-debug/non-free i386 Packages [11.7 kB]
+Get:38 http://archive.debian.org/debian-debug bullseye-debug/non-free amd64 Packages [16.4 kB]
+Get:39 http://archive.debian.org/debian-debug bullseye-debug/main amd64 Packages [3317 kB]
+Get:40 http://archive.debian.org/debian-debug bullseye-debug/main i386 Packages [3265 kB]
+Get:41 http://archive.debian.org/debian-debug bullseye-debug/contrib i386 Packages [14.8 kB]
+Fetched 43.9 MB in 2s (24.8 MB/s)
+Reading package lists...
++ apt-get install -y --no-install-recommends clang-16 python3-setuptools python3-pip
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-setuptools is already the newest version (52.0.0-4+deb11u2).
+python3-setuptools set to manually installed.
+The following additional packages will be installed:
+  libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-wheel
+Suggested packages:
+  clang-16-doc wasi-libc
+Recommended packages:
+  llvm-16-dev libclang-rt-16-dev python3-dev
+The following NEW packages will be installed:
+  clang-16 libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-pip python3-wheel
+0 upgraded, 9 newly installed, 0 to remove and 10 not upgraded.
+Need to get 45.5 MB of archives.
+After this operation, 242 MB of additional disk space will be used.
+Ign:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+Ign:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+Err:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Err:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Get:3 http://archive.debian.org/debian bullseye/main amd64 libllvm16 amd64 1:16.0.6-15~deb11u2 [23.0 MB]
+Get:4 http://archive.debian.org/debian bullseye/main amd64 libclang-cpp16 amd64 1:16.0.6-15~deb11u2 [11.5 MB]
+Get:5 http://archive.debian.org/debian bullseye/main amd64 libclang-common-16-dev all 1:16.0.6-15~deb11u2 [683 kB]
+Get:6 http://archive.debian.org/debian bullseye/main amd64 llvm-16-linker-tools amd64 1:16.0.6-15~deb11u2 [1258 kB]
+Get:7 http://archive.debian.org/debian bullseye/main amd64 libclang1-16 amd64 1:16.0.6-15~deb11u2 [6575 kB]
+Get:8 http://archive.debian.org/debian bullseye/main amd64 clang-16 amd64 1:16.0.6-15~deb11u2 [137 kB]
+Get:9 http://archive.debian.org/debian bullseye/main amd64 python3-wheel all 0.34.2-1 [24.0 kB]
+Fetched 43.2 MB in 1s (60.8 MB/s)
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python-pip-whl_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python3-pip_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
++ '[' 2 = 3 ']'
++ rm -rf /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_InRelease /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_main_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian-debug_dists_bullseye-debug_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_InRelease /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_contrib_source_Sources.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_main_source_Sources.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/archive.debian.org_debian_dists_bullseye_non-free_source_Sources.lz4 /var/lib/apt/lists/auxfiles /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_InRelease /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_main_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security-debug_dists_bullseye-security-debug_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_InRelease /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_contrib_source_Sources.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_main_source_Sources.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_binary-amd64_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_binary-i386_Packages.lz4 /var/lib/apt/lists/deb.debian.org_debian-security_dists_bullseye-security_non-free_source_Sources.lz4 /var/lib/apt/lists/lock /var/lib/apt/lists/partial /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_InRelease /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper-runtime-overlay_main_binary-i386_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_InRelease /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_binary-amd64_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_binary-i386_Packages.lz4 /var/lib/apt/lists/repo.steampowered.com_steamrt3_apt_dists_sniper_main_source_Sources.lz4
++ for attempt in 1 2 3
++ apt-get update
+Get:1 http://deb.debian.org/debian-security bullseye-security InRelease [27.1 kB]
+Get:2 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
+Get:3 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
+Get:4 http://archive.debian.org/debian bullseye InRelease [116 kB]
+Get:5 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
+Get:6 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
+Get:7 http://archive.debian.org/debian-debug bullseye-debug InRelease [37.6 kB]
+Get:8 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
+Get:9 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
+Get:10 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
+Get:11 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
+Get:12 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
+Get:13 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
+Get:14 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
+Get:15 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
+Get:16 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
+Get:17 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
+Get:18 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:19 http://deb.debian.org/debian-security-debug bullseye-security-debug/non-free amd64 Packages [708 B]
+Get:20 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
+Get:21 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
+Get:22 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
+Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
+Get:24 http://deb.debian.org/debian-security-debug bullseye-security-debug/non-free i386 Packages [844 B]
+Get:25 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
+Get:26 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
+Get:27 http://archive.debian.org/debian bullseye/contrib Sources [51.5 kB]
+Get:28 http://archive.debian.org/debian bullseye/non-free Sources [98.1 kB]
+Get:29 http://archive.debian.org/debian bullseye/main Sources [11.4 MB]
+Get:30 http://archive.debian.org/debian bullseye/non-free amd64 Packages [121 kB]
+Get:31 http://archive.debian.org/debian bullseye/main i386 Packages [11.0 MB]
+Get:32 http://archive.debian.org/debian bullseye/contrib i386 Packages [54.3 kB]
+Get:33 http://archive.debian.org/debian bullseye/main amd64 Packages [11.1 MB]
+Get:34 http://archive.debian.org/debian bullseye/non-free i386 Packages [96.6 kB]
+Get:35 http://archive.debian.org/debian bullseye/contrib amd64 Packages [61.0 kB]
+Get:36 http://archive.debian.org/debian-debug bullseye-debug/main amd64 Packages [3317 kB]
+Get:37 http://archive.debian.org/debian-debug bullseye-debug/contrib i386 Packages [14.8 kB]
+Get:38 http://archive.debian.org/debian-debug bullseye-debug/contrib amd64 Packages [33.9 kB]
+Get:39 http://archive.debian.org/debian-debug bullseye-debug/non-free amd64 Packages [16.4 kB]
+Get:40 http://archive.debian.org/debian-debug bullseye-debug/main i386 Packages [3265 kB]
+Get:41 http://archive.debian.org/debian-debug bullseye-debug/non-free i386 Packages [11.7 kB]
+Fetched 43.9 MB in 2s (23.7 MB/s)
+Reading package lists...
++ apt-get install -y --no-install-recommends clang-16 python3-setuptools python3-pip
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-setuptools is already the newest version (52.0.0-4+deb11u2).
+python3-setuptools set to manually installed.
+The following additional packages will be installed:
+  libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-wheel
+Suggested packages:
+  clang-16-doc wasi-libc
+Recommended packages:
+  llvm-16-dev libclang-rt-16-dev python3-dev
+The following NEW packages will be installed:
+  clang-16 libclang-common-16-dev libclang-cpp16 libclang1-16 libllvm16
+  llvm-16-linker-tools python-pip-whl python3-pip python3-wheel
+0 upgraded, 9 newly installed, 0 to remove and 10 not upgraded.
+Need to get 45.5 MB of archives.
+After this operation, 242 MB of additional disk space will be used.
+Ign:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+Ign:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+Err:1 http://deb.debian.org/debian-security bullseye-security/main amd64 python-pip-whl all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Err:2 http://deb.debian.org/debian-security bullseye-security/main amd64 python3-pip all 20.3.4-4+deb11u2
+  404  Not Found [IP: 151.101.162.132 80]
+Get:3 http://archive.debian.org/debian bullseye/main amd64 libllvm16 amd64 1:16.0.6-15~deb11u2 [23.0 MB]
+Get:4 http://archive.debian.org/debian bullseye/main amd64 libclang-cpp16 amd64 1:16.0.6-15~deb11u2 [11.5 MB]
+Get:5 http://archive.debian.org/debian bullseye/main amd64 libclang-common-16-dev all 1:16.0.6-15~deb11u2 [683 kB]
+Get:6 http://archive.debian.org/debian bullseye/main amd64 llvm-16-linker-tools amd64 1:16.0.6-15~deb11u2 [1258 kB]
+Get:7 http://archive.debian.org/debian bullseye/main amd64 libclang1-16 amd64 1:16.0.6-15~deb11u2 [6575 kB]
+Get:8 http://archive.debian.org/debian bullseye/main amd64 clang-16 amd64 1:16.0.6-15~deb11u2 [137 kB]
+Get:9 http://archive.debian.org/debian bullseye/main amd64 python3-wheel all 0.34.2-1 [24.0 kB]
+Fetched 43.2 MB in 0s (97.3 MB/s)
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python-pip-whl_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Failed to fetch http://deb.debian.org/debian-security/pool/updates/main/p/python-pip/python3-pip_20.3.4-4%2bdeb11u2_all.deb  404  Not Found [IP: 151.101.162.132 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
++ '[' 3 = 3 ']'
++ exit 1

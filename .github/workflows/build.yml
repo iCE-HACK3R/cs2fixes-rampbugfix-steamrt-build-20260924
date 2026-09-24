@@ -81,15 +81,14 @@ jobs:
             echo '=== all generated native files ==='
             find . -type f -size +1k -print -exec file {} \\; -exec sha256sum {} \\;
             echo '=== locate RampbugFix ELF ==='
-            mapfile -t binaries < <(find . -type f -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so')
-            for candidate in "${binaries[@]}"; do
+            while IFS= read -r candidate; do
               if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then
                 echo "Using native binary: $candidate"
                 mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64
                 cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
                 break
               fi
-            done
+            done < <(find . -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \))
             echo '=== package contents ==='
             find package -maxdepth 8 -type f -print -exec file {} \\; -exec sha256sum {} \\;
             test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
@@ -100,17 +99,30 @@ jobs:
           } 2>&1 | tee ../rampbugfix-build.log
           exit ${PIPESTATUS[0]}
 
+      - name: Upload full build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rampbugfix-build-${{ github.run_id }}
+          path: |
+            CS2Fixes-RampBugFix/rampbugfix-build.log
+            CS2Fixes-RampBugFix/build
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Commit artifact or failure log
         if: always()
         shell: bash
         run: |
           mkdir -p buildrepo/artifacts
-          rm -f buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
-          if [ -s CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz ] && tar -tzf CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then
-            cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/
-            cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/
+          rm -f buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/rampbugfix-build.log
+          archive=$(find . -type f -name 'CS2Fixes-RampbugFix-abi18-steamrt.tar.gz' -size +1k | head -n1)
+          if [ -n "$archive" ] && tar -tzf "$archive" | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then
+            cp "$archive" buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz
+            cp "${archive}.sha256" buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
           fi
-          if [ -f CS2Fixes-RampBugFix/rampbugfix-build.log ]; then cp CS2Fixes-RampBugFix/rampbugfix-build.log buildrepo/artifacts/; fi
+          log=$(find . -type f -name 'rampbugfix-build.log' | head -n1)
+          if [ -n "$log" ]; then cp "$log" buildrepo/artifacts/rampbugfix-build.log; fi
           cd buildrepo
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

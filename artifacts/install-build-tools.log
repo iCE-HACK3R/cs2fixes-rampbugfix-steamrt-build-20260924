@@ -6,26 +6,26 @@ Hit:2 http://archive.debian.org/debian bullseye InRelease
 Hit:3 http://archive.debian.org/debian-debug bullseye-debug InRelease
 Get:4 http://deb.debian.org/debian-security-debug bullseye-security-debug InRelease [35.5 kB]
 Get:5 http://deb.debian.org/debian-security bullseye-security/non-free Sources [2987 B]
-Get:6 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
-Get:7 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
+Get:6 http://deb.debian.org/debian-security bullseye-security/main Sources [501 kB]
+Get:7 http://deb.debian.org/debian-security bullseye-security/contrib Sources [1414 B]
 Get:8 http://deb.debian.org/debian-security bullseye-security/contrib i386 Packages [3230 B]
-Get:9 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
-Get:10 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
-Get:11 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
-Get:12 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
-Get:13 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
-Get:14 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
-Get:15 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
-Get:16 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
-Get:17 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
-Get:18 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
-Get:19 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:9 http://deb.debian.org/debian-security bullseye-security/non-free amd64 Packages [8443 B]
+Get:10 http://deb.debian.org/debian-security bullseye-security/non-free i386 Packages [5457 B]
+Get:11 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [626 kB]
+Get:12 http://deb.debian.org/debian-security bullseye-security/contrib amd64 Packages [3562 B]
+Get:13 http://deb.debian.org/debian-security bullseye-security/main i386 Packages [622 kB]
+Get:14 https://repo.steampowered.com/steamrt3/apt sniper InRelease [7924 B]
+Get:15 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib amd64 Packages [2996 B]
+Get:16 http://deb.debian.org/debian-security-debug bullseye-security-debug/main amd64 Packages [385 kB]
+Get:17 http://deb.debian.org/debian-security-debug bullseye-security-debug/main i386 Packages [387 kB]
+Get:18 http://deb.debian.org/debian-security-debug bullseye-security-debug/contrib i386 Packages [2808 B]
+Get:19 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay InRelease [7880 B]
 Get:20 https://repo.steampowered.com/steamrt3/apt sniper/main Sources [47.0 kB]
-Get:21 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
-Get:22 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
-Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
-Get:24 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
-Fetched 3046 kB in 6s (546 kB/s)
+Get:21 https://repo.steampowered.com/steamrt3/apt sniper/main i386 Packages [172 kB]
+Get:22 https://repo.steampowered.com/steamrt3/apt sniper/main amd64 Packages [196 kB]
+Get:23 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main amd64 Packages [363 B]
+Get:24 https://repo.steampowered.com/steamrt3/apt sniper-runtime-overlay/main i386 Packages [363 B]
+Fetched 3046 kB in 1s (2456 kB/s)
 Reading package lists...
 + apt-get install -y --no-install-recommends clang-16 python3-setuptools
 Reading package lists...
@@ -52,7 +52,7 @@ Get:3 http://archive.debian.org/debian bullseye/main amd64 libclang-common-16-de
 Get:4 http://archive.debian.org/debian bullseye/main amd64 llvm-16-linker-tools amd64 1:16.0.6-15~deb11u2 [1258 kB]
 Get:5 http://archive.debian.org/debian bullseye/main amd64 libclang1-16 amd64 1:16.0.6-15~deb11u2 [6575 kB]
 Get:6 http://archive.debian.org/debian bullseye/main amd64 clang-16 amd64 1:16.0.6-15~deb11u2 [137 kB]
-Fetched 43.2 MB in 0s (92.2 MB/s)
+Fetched 43.2 MB in 0s (144 MB/s)
 Selecting previously unselected package libllvm16:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 60867 files and directories currently installed.)
 Preparing to unpack .../0-libllvm16_1%3a16.0.6-15~deb11u2_amd64.deb ...

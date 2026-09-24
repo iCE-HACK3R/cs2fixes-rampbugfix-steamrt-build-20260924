@@ -62,28 +62,39 @@ jobs:
         working-directory: CS2Fixes-RampbugFix
         shell: bash
         run: |
-          mkdir build
-          cd build
-          python3 ../configure.py --enable-optimize --sdks cs2
-          ambuild
-          find package -maxdepth 8 -type f -print -exec sha256sum {} \;
-          tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
-          sha256sum ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+          set +e
+          {
+            echo '=== env ==='
+            pwd
+            ls -la
+            echo "HL2SDKCS2=$HL2SDKCS2"
+            echo '=== build ==='
+            mkdir -p build
+            cd build
+            python3 ../configure.py --enable-optimize --sdks cs2
+            ambuild
+            find package -maxdepth 8 -type f -print -exec sha256sum {} \;
+            tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
+            sha256sum ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+          } 2>&1 | tee ../rampbugfix-build.log
+          exit ${PIPESTATUS[0]}
 
-      - name: Commit artifact
+      - name: Commit artifact or failure log
+        if: always()
         shell: bash
         run: |
           mkdir -p buildrepo/artifacts
-          cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/
-          cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/
+          if [ -f CS2Fixes-RampbugFix-abi18-steamrt.tar.gz ]; then cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/; fi
+          if [ -f CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 ]; then cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/; fi
+          if [ -f CS2Fixes-RampbugFix/rampbugfix-build.log ]; then cp CS2Fixes-RampbugFix/rampbugfix-build.log buildrepo/artifacts/; fi
           cd buildrepo
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+          git add artifacts || true
           if git diff --cached --quiet; then
-            echo 'No artifact changes to commit.'
+            echo 'No artifact/log changes to commit.'
           else
-            git commit -m 'Publish RampbugFix ABI18 SteamRT artifact'
+            git commit -m 'Publish RampbugFix ABI18 build output'
             git pull --rebase origin main
             git push
           fi

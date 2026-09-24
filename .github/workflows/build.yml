@@ -73,12 +73,25 @@ jobs:
             ls -la
             echo "HL2SDKCS2=$HL2SDKCS2"
             echo '=== build ==='
+            rm -rf build
             mkdir -p build
             cd build
             python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64
             ambuild
-            find . -maxdepth 8 -type f -name '*rampbugfix*' -print -exec file {} \\; -exec sha256sum {} \\;
-            find package -maxdepth 8 -type f -print -exec sha256sum {} \\;
+            echo '=== all generated native files ==='
+            find . -type f -size +1k -print -exec file {} \\; -exec sha256sum {} \\;
+            echo '=== locate RampbugFix ELF ==='
+            mapfile -t binaries < <(find . -type f -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so')
+            for candidate in "${binaries[@]}"; do
+              if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then
+                echo "Using native binary: $candidate"
+                mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64
+                cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
+                break
+              fi
+            done
+            echo '=== package contents ==='
+            find package -maxdepth 8 -type f -print -exec file {} \\; -exec sha256sum {} \\;
             test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
             file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'
             tar -C package -czf ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
@@ -92,6 +105,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p buildrepo/artifacts
+          rm -f buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
           if [ -s CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz ] && tar -tzf CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then
             cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/
             cp CS2Fixes-RampBugFix/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/
@@ -100,7 +114,7 @@ jobs:
           cd buildrepo
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add artifacts || true
+          git add -f artifacts || true
           if git diff --cached --quiet; then
             echo 'No artifact/log changes to commit.'
           else

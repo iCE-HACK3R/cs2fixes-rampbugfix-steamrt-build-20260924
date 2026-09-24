@@ -52,6 +52,14 @@ jobs:
           path: khook-source
           fetch-depth: 1
 
+      - name: Checkout AMBuild
+        uses: actions/checkout@v4
+        with:
+          repository: alliedmodders/ambuild
+          ref: master
+          path: ambuild-source
+          fetch-depth: 1
+
       - name: Install KHook into Metamod tree
         shell: bash
         run: |
@@ -88,9 +96,14 @@ jobs:
             apt-get install -y --no-install-recommends clang-16 python3-setuptools
             ln -sf /usr/bin/clang-16 /usr/bin/clang
             ln -sf /usr/bin/clang++-16 /usr/bin/clang++
-            cd "$GITHUB_WORKSPACE/ambuild"
+            if [ ! -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" ]; then
+              rm -rf "$GITHUB_WORKSPACE/ambuild-source"
+              git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"
+            fi
+            test -f "$GITHUB_WORKSPACE/ambuild-source/setup.py"
+            cd "$GITHUB_WORKSPACE/ambuild-source"
             python3 setup.py install --user
-            command -v ambuild
+            test -x "$HOME/.local/bin/ambuild"
             echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
           exit ${PIPESTATUS[0]}

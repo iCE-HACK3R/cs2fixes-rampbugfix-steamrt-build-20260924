@@ -169,7 +169,7 @@ jobs:
                 cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
                 break
               fi
-            done < <(find . -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \))
+            done < <(find . -type f ! -path './package/*' \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \))
             echo '=== package contents ==='
             find package -maxdepth 8 -type f -print -exec file {} ';' -exec sha256sum {} ';'
             test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so

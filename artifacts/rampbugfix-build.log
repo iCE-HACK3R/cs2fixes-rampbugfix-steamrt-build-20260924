@@ -1,0 +1,44 @@
+=== env ===
+/__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/CS2Fixes-RampBugFix
+total 172
+drwxr-xr-x 13 root root  4096 Sep 24 15:11 .
+drwxr-xr-x  6 1001 1001  4096 Sep 24 15:11 ..
+-rw-r--r--  1 root root   173 Sep 24 15:11 .dockerignore
+drwxr-xr-x  9 root root  4096 Sep 24 15:11 .git
+drwxr-xr-x  3 root root  4096 Sep 24 15:11 .github
+-rw-r--r--  1 root root   183 Sep 24 15:11 .gitignore
+-rw-r--r--  1 root root   208 Sep 24 15:11 .gitmodules
+-rw-r--r--  1 root root  9616 Sep 24 15:11 AMBuildScript
+-rw-r--r--  1 root root  3630 Sep 24 15:11 AMBuilder
+-rw-r--r--  1 root root  1405 Sep 24 15:11 CS2Fixes.sln
+-rw-r--r--  1 root root 13343 Sep 24 15:11 CS2Fixes.vcxproj
+-rw-r--r--  1 root root 10951 Sep 24 15:11 CS2Fixes.vcxproj.filters
+-rw-r--r--  1 root root   488 Sep 24 15:11 Dockerfile
+-rw-r--r--  1 root root 35149 Sep 24 15:11 LICENSE
+-rw-r--r--  1 root root  2253 Sep 24 15:11 PackageScript
+-rw-r--r--  1 root root  1275 Sep 24 15:11 README.md
+drwxr-xr-x  6 root root  4096 Sep 24 15:11 assets
+drwxr-xr-x  6 root root  4096 Sep 24 15:11 assets_source
+drwxr-xr-x  3 root root  4096 Sep 24 15:11 configs
+-rw-r--r--  1 root root  2291 Sep 24 15:11 configure.py
+-rw-r--r--  1 root root    98 Sep 24 15:11 docker-compose.yml
+-rw-r--r--  1 root root   123 Sep 24 15:11 docker-entrypoint.sh
+drwxr-xr-x  2 root root  4096 Sep 24 15:11 gamedata
+drwxr-xr-x  3 root root  4096 Sep 24 15:11 hl2sdk-manifests
+drwxr-xr-x  4 root root  4096 Sep 24 15:11 protobuf
+drwxr-xr-x 21 root root  4096 Sep 24 15:11 sdk
+drwxr-xr-x  4 root root  4096 Sep 24 15:11 src
+drwxr-xr-x  5 root root  4096 Sep 24 15:11 vendor
+GITHUB_WORKSPACE=/__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924
+HL2SDKCS2=/__w/cs2fixes-rampbugfix-steamrt-build-20260924/cs2fixes-rampbugfix-steamrt-build-20260924/CS2Fixes-RampBugFix/sdk
+=== build ===
+AMBuild must be installed to build this project.
+http://www.alliedmods.net/ambuild
+/__w/_temp/b3898aaa-9640-4c30-b7cd-514c4558c45b.sh: line 13: ambuild: command not found
+=== all generated native files ===
+=== locate RampBugFix ELF ===
+=== package contents ===
+find: 'package': No such file or directory
+tar: package: Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
+59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2  ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz

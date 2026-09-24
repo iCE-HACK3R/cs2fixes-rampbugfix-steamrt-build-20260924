@@ -50,6 +50,23 @@ jobs:
           repository: alliedmodders/ambuild
           path: ambuild
 
+      - name: Verify and add Metamod ABI18 KHook include
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook/khook.hpp"
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('CS2Fixes-RampBugFix/AMBuildScript')
+          text = path.read_text()
+          needle = "      os.path.join(mms_core_path, 'sourcehook'),"
+          addition = needle + "\n      os.path.join(mms_root, 'third_party', 'khook'),"
+          if "os.path.join(mms_root, 'third_party', 'khook')" not in text:
+              if needle not in text:
+                  raise SystemExit('AMBuildScript include anchor not found')
+              path.write_text(text.replace(needle, addition, 1))
+          PY
+
       - name: Install AMBuild and clang
         shell: bash
         run: |
@@ -79,8 +96,8 @@ jobs:
             python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64
             ambuild
             echo '=== all generated native files ==='
-            find . -type f -size +1k -print -exec file {} \\; -exec sha256sum {} \\;
-            echo '=== locate RampbugFix ELF ==='
+            find . -type f -size +1k -print -exec file {} ';' -exec sha256sum {} ';'
+            echo '=== locate RampBugFix ELF ==='
             while IFS= read -r candidate; do
               if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then
                 echo "Using native binary: $candidate"
@@ -90,7 +107,7 @@ jobs:
               fi
             done < <(find . -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \))
             echo '=== package contents ==='
-            find package -maxdepth 8 -type f -print -exec file {} \\; -exec sha256sum {} \\;
+            find package -maxdepth 8 -type f -print -exec file {} ';' -exec sha256sum {} ';'
             test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so
             file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'
             tar -C package -czf ../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .

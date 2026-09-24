@@ -1,0 +1,89 @@
+name: Build CS2Fixes RampbugFix ABI18
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'artifacts/**'
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    container: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
+    env:
+      HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampbugFix/sdk
+    steps:
+      - name: Checkout build repo
+        uses: actions/checkout@v4
+        with:
+          path: buildrepo
+          persist-credentials: true
+
+      - name: Checkout RampbugFix
+        uses: actions/checkout@v4
+        with:
+          repository: Interesting-exe/CS2Fixes-RampbugFix
+          ref: main
+          path: CS2Fixes-RampbugFix
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Checkout Metamod 2.0.0.1469
+        uses: actions/checkout@v4
+        with:
+          repository: alliedmodders/metamod-source
+          ref: 2.0.0.1469
+          path: mmsource-2.0
+          submodules: recursive
+
+      - name: Checkout AMBuild
+        uses: actions/checkout@v4
+        with:
+          repository: alliedmodders/ambuild
+          path: ambuild
+
+      - name: Install AMBuild and clang
+        shell: bash
+        run: |
+          apt-get update
+          apt-get install -y clang-16 python3-setuptools
+          ln -sf /usr/bin/clang-16 /usr/bin/clang
+          ln -sf /usr/bin/clang++-16 /usr/bin/clang++
+          cd ambuild
+          python3 setup.py install --user
+          cd ..
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build package
+        working-directory: CS2Fixes-RampbugFix
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          python3 ../configure.py --enable-optimize --sdks cs2
+          ambuild
+          find package -maxdepth 8 -type f -print -exec sha256sum {} \;
+          tar -C package -czf ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz .
+          sha256sum ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz | tee ../../CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+
+      - name: Commit artifact
+        shell: bash
+        run: |
+          mkdir -p buildrepo/artifacts
+          cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz buildrepo/artifacts/
+          cp CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256 buildrepo/artifacts/
+          cd buildrepo
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256
+          if git diff --cached --quiet; then
+            echo 'No artifact changes to commit.'
+          else
+            git commit -m 'Publish RampbugFix ABI18 SteamRT artifact'
+            git pull --rebase origin main
+            git push
+          fi

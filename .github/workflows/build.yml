@@ -48,6 +48,15 @@ jobs:
           sdk=Path('CS2Fixes-RampBugFix/sdk/public/tier1/utlstringtoken.h'); t=sdk.read_text(); old='if(g_bUpdateStringTokenDatabase)'
           if old not in t: raise SystemExit('string token guard not found')
           sdk.write_text(t.replace(old,'if constexpr(false)',1))
+          gd=Path('CS2Fixes-RampBugFix/gamedata/cs2fixes.games.txt'); t=gd.read_text()
+          replacements={
+              r'\\x48\\xB8\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x07\\x55':r'\\x48\\xB8\\x00\\x00\\x00\\x00\\x00\\x00\\x80\\x3F\\x55',
+              r'\\x55\\x48\\x89\\xE5\\x41\\x57\\x41\\x56\\x49\\x89\\xD6':r'\\x55\\xB8\\xFF\\xFF\\xFF\\xFF\\x48\\x89\\xE5\\x41\\x57\\x41\\x56\\x49\\x89\\xD6',
+          }
+          for old,new in replacements.items():
+              if t.count(old)!=1: raise SystemExit(f'gamedata anchor count for {old}: {t.count(old)}')
+              t=t.replace(old,new,1)
+          gd.write_text(t)
           source=Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp'); t=source.read_text().replace('#include "cs2fixes.h"\n','#include "cs2fixes.h"\n#include <khook.hpp>\n',1)
           d='''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
           using StartupServerHook = KHook::Virtual<INetworkServerService, void, const GameSessionConfiguration_t&, ISource2WorldSession*, const char *>;

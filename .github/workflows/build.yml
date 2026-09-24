@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore:
-      - 'artifacts/**'
+    paths-ignore: ['artifacts/**']
 
 concurrency:
   group: rampbugfix-abi18-${{ github.ref }}
@@ -31,8 +30,7 @@ jobs:
         with: { repository: Kenzzer/KHook, ref: master, path: khook-source, fetch-depth: 1 }
       - uses: actions/checkout@v4
         with: { repository: alliedmodders/ambuild, ref: master, path: ambuild-source, fetch-depth: 1 }
-
-      - name: Install KHook and port SourceHook hooks
+      - name: Apply ABI18 compatibility patches
         shell: bash
         run: |
           set -euo pipefail
@@ -43,11 +41,14 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          p=Path('CS2Fixes-RampBugFix/AMBuildScript'); t=p.read_text(); n="      os.path.join(mms_core_path, 'sourcehook'),"; a=n+"\n      os.path.join(mms_root, 'third_party', 'khook', 'include'),"
+          build_script=Path('CS2Fixes-RampBugFix/AMBuildScript'); t=build_script.read_text(); n="      os.path.join(mms_core_path, 'sourcehook'),"; a=n+"\n      os.path.join(mms_root, 'third_party', 'khook', 'include'),"
           if "os.path.join(mms_root, 'third_party', 'khook', 'include')" not in t:
               if n not in t: raise SystemExit('AMBuildScript include anchor not found')
-              p.write_text(t.replace(n,a,1))
-          p=Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp'); t=p.read_text().replace('#include "cs2fixes.h"\n','#include "cs2fixes.h"\n#include <khook.hpp>\n',1)
+              build_script.write_text(t.replace(n,a,1))
+          sdk=Path('CS2Fixes-RampBugFix/sdk/public/tier1/utlstringtoken.h'); t=sdk.read_text(); old='if(g_bUpdateStringTokenDatabase)'
+          if old not in t: raise SystemExit('string token guard not found')
+          sdk.write_text(t.replace(old,'if constexpr(false)',1))
+          source=Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp'); t=source.read_text().replace('#include "cs2fixes.h"\n','#include "cs2fixes.h"\n#include <khook.hpp>\n',1)
           d='''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
           using StartupServerHook = KHook::Virtual<INetworkServerService, void, const GameSessionConfiguration_t&, ISource2WorldSession*, const char *>;
           static KHook::Return<void> OnClientActive(IServerGameClients *, CPlayerSlot s, bool l, const char *n, uint64 x) { g_CS2Fixes.Hook_ClientActive(s,l,n,x); return {KHook::Action::Ignore}; }
@@ -55,31 +56,28 @@ jobs:
           static ClientActiveHook g_clientActiveHook(&IServerGameClients::ClientActive, OnClientActive, nullptr);
           static StartupServerHook g_startupServerHook(&INetworkServerService::StartupServer, OnStartupServer, nullptr);'''
           t,c=re.subn(r'SH_DECL_HOOK4_void\([^;]+;\s*SH_DECL_HOOK3_void\([^;]+;',d,t,1,flags=re.S)
-          if c!=1: raise SystemExit('SourceHook declarations were not found')
+          if c!=1: raise SystemExit('SourceHook declarations not found')
           t,c=re.subn(r'SH_ADD_HOOK\(IServerGameClients,[^;]+;\s*SH_ADD_HOOK\(INetworkServerService,[^;]+;','g_clientActiveHook.Add(g_pSource2GameClients);\n\tg_startupServerHook.Add(g_pNetworkServerService);',t,1,flags=re.S)
-          if c!=1: raise SystemExit('SourceHook add calls were not found')
+          if c!=1: raise SystemExit('SourceHook add calls not found')
           t,c=re.subn(r'SH_REMOVE_HOOK\(IServerGameClients,[^;]+;\s*SH_REMOVE_HOOK\(INetworkServerService,[^;]+;','g_clientActiveHook.Remove(g_pSource2GameClients);\n\tg_startupServerHook.Remove(g_pNetworkServerService);',t,1,flags=re.S)
-          if c!=1: raise SystemExit('SourceHook remove calls were not found')
+          if c!=1: raise SystemExit('SourceHook remove calls not found')
           t,c=re.subn(r'\n\s*if \(g_iCGamePlayerEquipUseId != -1\)\s*\n\s*SH_REMOVE_HOOK_ID\(g_iCGamePlayerEquipUseId\);','',t,1)
-          if c!=1: raise SystemExit('Legacy SourceHook ID cleanup was not found')
-          p.write_text(t)
+          if c!=1: raise SystemExit('legacy SourceHook cleanup not found')
+          source.write_text(t)
           PY
-
       - name: Install AMBuild and clang
         shell: bash
         run: |
           set +e
           { apt-get update; apt-get install -y --no-install-recommends clang-16 python3-setuptools; ln -sf /usr/bin/clang-16 /usr/bin/clang; ln -sf /usr/bin/clang++-16 /usr/bin/clang++; test -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" || { rm -rf "$GITHUB_WORKSPACE/ambuild-source"; git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"; }; cd "$GITHUB_WORKSPACE/ambuild-source"; python3 setup.py install --user; test -x "$HOME/.local/bin/ambuild"; echo "$HOME/.local/bin" >> "$GITHUB_PATH"; } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
           exit ${PIPESTATUS[0]}
-
       - name: Build package
         working-directory: CS2Fixes-RampBugFix
         shell: bash
         run: |
           set +e
-          { export PATH="$HOME/.local/bin:$PATH"; rm -rf build; mkdir -p build; cd build; python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64; command -v ambuild; ambuild; find . -type f -size +1k -print -exec file {} ';' -exec sha256sum {} ';'; while IFS= read -r candidate; do if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then mkdir -p package/addons/cs2fixes-rampbug/bin/linuxsteamrt64; cp "$candidate" package/addons/cs2fixes-rampbug/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; break; fi; done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print); find package -maxdepth 8 -type f -print -exec file {} ';' -exec sha256sum {} ';'; test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'; tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .; sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256; tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | sed 's#^\./##' | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
+          { export PATH="$HOME/.local/bin:$PATH"; rm -rf build; mkdir -p build; cd build; python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64; command -v ambuild; ambuild; while IFS= read -r candidate; do if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64; cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; break; fi; done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print); test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'; tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .; sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256; tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | sed 's#^\./##' | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
           exit ${PIPESTATUS[0]}
-
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -91,7 +89,6 @@ jobs:
             ${{ github.workspace }}/CS2Fixes-RampBugFix/build
           if-no-files-found: warn
           retention-days: 7
-
       - name: Commit artifact or logs
         if: always()
         shell: bash

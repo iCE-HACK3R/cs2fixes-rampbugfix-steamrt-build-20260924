@@ -70,6 +70,8 @@ jobs:
           test -s "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook/include/khook.hpp"
           python3 - <<'PY'
           from pathlib import Path
+          import re
+
           build_script = Path('CS2Fixes-RampBugFix/AMBuildScript')
           text = build_script.read_text()
           needle = "      os.path.join(mms_core_path, 'sourcehook'),"
@@ -82,9 +84,8 @@ jobs:
           source = Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp')
           text = source.read_text()
           text = text.replace('#include "cs2fixes.h"\n', '#include "cs2fixes.h"\n#include <khook.hpp>\n', 1)
-          old_decl = '''SH_DECL_HOOK4_void(IServerGameClients, ClientActive, SH_NOATTRIB, 0, CPlayerSlot, bool, const char *, uint64);
-          SH_DECL_HOOK3_void(INetworkServerService, StartupServer, SH_NOATTRIB, 0, const GameSessionConfiguration_t&, ISource2WorldSession*, const char*);'''
-          new_decl = '''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
+
+          declarations = '''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
           using StartupServerHook = KHook::Virtual<INetworkServerService, void, const GameSessionConfiguration_t&, ISource2WorldSession*, const char *>;
 
           static KHook::Return<void> OnClientActive(IServerGameClients *, CPlayerSlot slot, bool loadGame, const char *name, uint64 xuid)
@@ -101,23 +102,19 @@ jobs:
 
           static ClientActiveHook g_clientActiveHook(&IServerGameClients::ClientActive, OnClientActive, nullptr);
           static StartupServerHook g_startupServerHook(&INetworkServerService::StartupServer, OnStartupServer, nullptr);'''
-          if old_decl not in text:
-              raise SystemExit('SourceHook declarations not found')
-          text = text.replace(old_decl, new_decl, 1)
-          old_add = '''SH_ADD_HOOK(IServerGameClients, ClientActive, g_pSource2GameClients, SH_MEMBER(this, &CS2Fixes::Hook_ClientActive), true);
-          SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_MEMBER(this, &CS2Fixes::Hook_StartupServer), true);'''
-          new_add = '''g_clientActiveHook.Add(g_pSource2GameClients);
-          g_startupServerHook.Add(g_pNetworkServerService);'''
-          if old_add not in text:
-              raise SystemExit('SourceHook add calls not found')
-          text = text.replace(old_add, new_add, 1)
-          old_remove = '''SH_REMOVE_HOOK(IServerGameClients, ClientActive, g_pSource2GameClients, SH_MEMBER(this, &CS2Fixes::Hook_ClientActive), true);
-          SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_MEMBER(this, &CS2Fixes::Hook_StartupServer), true);'''
-          new_remove = '''g_clientActiveHook.Remove(g_pSource2GameClients);
-          g_startupServerHook.Remove(g_pNetworkServerService);'''
-          if old_remove not in text:
-              raise SystemExit('SourceHook remove calls not found')
-          source.write_text(text.replace(old_remove, new_remove, 1))
+          text, count = re.subn(r'SH_DECL_HOOK4_void\([^;]+;\s*SH_DECL_HOOK3_void\([^;]+;', declarations, text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit('SourceHook declarations were not found')
+
+          text, count = re.subn(r'SH_ADD_HOOK\(IServerGameClients,[^;]+;\s*SH_ADD_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Add(g_pSource2GameClients);\n\tg_startupServerHook.Add(g_pNetworkServerService);', text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit('SourceHook add calls were not found')
+
+          text, count = re.subn(r'SH_REMOVE_HOOK\(IServerGameClients,[^;]+;\s*SH_REMOVE_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Remove(g_pSource2GameClients);\n\tg_startupServerHook.Remove(g_pNetworkServerService);', text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit('SourceHook remove calls were not found')
+
+          source.write_text(text)
           PY
 
       - name: Install AMBuild and clang

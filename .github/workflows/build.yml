@@ -44,19 +44,27 @@ jobs:
           path: mmsource-2.0
           submodules: recursive
 
-      - name: Checkout KHook headers
+      - name: Checkout KHook headers separately
         uses: actions/checkout@v4
         with:
           repository: Kenzzer/KHook
           ref: master
-          path: mmsource-2.0/third_party/khook
+          path: khook-source
           fetch-depth: 1
 
-      - name: Verify and add Metamod ABI18 KHook include
+      - name: Install KHook into Metamod tree
         shell: bash
         run: |
           set -euo pipefail
+          rm -rf "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook"
+          mkdir -p "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook"
+          cp -a "$GITHUB_WORKSPACE/khook-source/." "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook/"
           test -s "$GITHUB_WORKSPACE/mmsource-2.0/third_party/khook/include/khook.hpp"
+
+      - name: Add Metamod ABI18 KHook include
+        shell: bash
+        run: |
+          set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
           path = Path('CS2Fixes-RampBugFix/AMBuildScript')
@@ -135,11 +143,11 @@ jobs:
         run: |
           buildrepo="$GITHUB_WORKSPACE/buildrepo"
           mkdir -p "$buildrepo/artifacts"
-          rm -f "$buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256" "$buildrepo/artifacts/rampbugfix-build.log"
+          rm -f "$buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz" "$buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256" "$buildrepo/artifacts/rampbugfix-build.log"
           archive=$(find "$GITHUB_WORKSPACE/CS2Fixes-RampBugFix" -type f -name 'CS2Fixes-RampBugFix-abi18-steamrt.tar.gz' -size +1k | head -n1)
           if [ -n "$archive" ] && tar -tzf "$archive" | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then
             cp "$archive" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz"
-            cp "${archive}.sha256" "$buildrepo/artifacts/CS2Fixes-RampbugFix-abi18-steamrt.tar.gz.sha256"
+            cp "${archive}.sha256" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256"
           fi
           if [ -s "$GITHUB_WORKSPACE/rampbugfix-build.log" ]; then cp "$GITHUB_WORKSPACE/rampbugfix-build.log" "$buildrepo/artifacts/rampbugfix-build.log"; fi
           git -C "$buildrepo" config user.name 'github-actions[bot]'

@@ -45,15 +45,17 @@ jobs:
           if "os.path.join(mms_root, 'third_party', 'khook', 'include')" not in t:
               if n not in t: raise SystemExit('AMBuildScript include anchor not found')
               build_script.write_text(t.replace(n,a,1))
-          sdk=Path('CS2Fixes-RampBugFix/sdk/public/tier1/utlstringtoken.h'); t=sdk.read_text(); old='if(g_bUpdateStringTokenDatabase)'
-          if old not in t: raise SystemExit('string token guard not found')
-          sdk.write_text(t.replace(old,'if constexpr(false)',1))
+          sdk=Path('CS2Fixes-RampBugFix/sdk/public/tier1/utlstringtoken.h'); t=sdk.read_text(); old=r'if\s*\(\s*g_bUpdateStringTokenDatabase\s*\)'
+          if not re.search(old, t): raise SystemExit('string token guard not found')
+          t=re.sub(old,'if constexpr(false)',t,count=1)
+          sdk.write_text(t)
           gd=Path('CS2Fixes-RampBugFix/gamedata/cs2fixes.games.txt'); t=gd.read_text()
           replacements={
               r'\\x48\\xB8\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x07\\x55':r'\\x48\\xB8\\x00\\x00\\x00\\x00\\x00\\x00\\x80\\x3F\\x55',
               r'\\x55\\x48\\x89\\xE5\\x41\\x57\\x41\\x56\\x49\\x89\\xD6':r'\\x55\\xB8\\xFF\\xFF\\xFF\\xFF\\x48\\x89\\xE5\\x41\\x57\\x41\\x56\\x49\\x89\\xD6',
           }
           for old,new in replacements.items():
+              print(f'gamedata anchor count for {old}: {t.count(old)}')
               if t.count(old)!=1: raise SystemExit(f'gamedata anchor count for {old}: {t.count(old)}')
               t=t.replace(old,new,1)
           gd.write_text(t)

@@ -21,40 +21,17 @@ jobs:
     env:
       HL2SDKCS2: ${{ github.workspace }}/CS2Fixes-RampBugFix/sdk
     steps:
-      - name: Checkout build repo
-        uses: actions/checkout@v4
-        with:
-          path: buildrepo
-          persist-credentials: true
-      - name: Checkout RampbugFix
-        uses: actions/checkout@v4
-        with:
-          repository: Interesting-exe/CS2Fixes-RampBugFix
-          ref: main
-          path: CS2Fixes-RampBugFix
-          submodules: recursive
-          fetch-depth: 0
-      - name: Checkout Metamod 2.0.0.1469
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/metamod-source
-          ref: 2.0.0.1469
-          path: mmsource-2.0
-          submodules: recursive
-      - name: Checkout KHook headers separately
-        uses: actions/checkout@v4
-        with:
-          repository: Kenzzer/KHook
-          ref: master
-          path: khook-source
-          fetch-depth: 1
-      - name: Checkout AMBuild
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/ambuild
-          ref: master
-          path: ambuild-source
-          fetch-depth: 1
+      - uses: actions/checkout@v4
+        with: { path: buildrepo, persist-credentials: true }
+      - uses: actions/checkout@v4
+        with: { repository: Interesting-exe/CS2Fixes-RampBugFix, ref: main, path: CS2Fixes-RampBugFix, submodules: recursive, fetch-depth: 0 }
+      - uses: actions/checkout@v4
+        with: { repository: alliedmodders/metamod-source, ref: 2.0.0.1469, path: mmsource-2.0, submodules: recursive }
+      - uses: actions/checkout@v4
+        with: { repository: Kenzzer/KHook, ref: master, path: khook-source, fetch-depth: 1 }
+      - uses: actions/checkout@v4
+        with: { repository: alliedmodders/ambuild, ref: master, path: ambuild-source, fetch-depth: 1 }
+
       - name: Install KHook and port SourceHook hooks
         shell: bash
         run: |
@@ -66,45 +43,44 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          build_script = Path('CS2Fixes-RampBugFix/AMBuildScript')
-          text = build_script.read_text()
-          needle = "      os.path.join(mms_core_path, 'sourcehook'),"
-          addition = needle + "\n      os.path.join(mms_root, 'third_party', 'khook', 'include'),"
-          if "os.path.join(mms_root, 'third_party', 'khook', 'include')" not in text:
-              if needle not in text: raise SystemExit('AMBuildScript include anchor not found')
-              build_script.write_text(text.replace(needle, addition, 1))
-          source = Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp')
-          text = source.read_text().replace('#include "cs2fixes.h"\n', '#include "cs2fixes.h"\n#include <khook.hpp>\n', 1)
-          declarations = '''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
+          p=Path('CS2Fixes-RampBugFix/AMBuildScript'); t=p.read_text(); n="      os.path.join(mms_core_path, 'sourcehook'),"; a=n+"\n      os.path.join(mms_root, 'third_party', 'khook', 'include'),"
+          if "os.path.join(mms_root, 'third_party', 'khook', 'include')" not in t:
+              if n not in t: raise SystemExit('AMBuildScript include anchor not found')
+              p.write_text(t.replace(n,a,1))
+          p=Path('CS2Fixes-RampBugFix/src/cs2fixes.cpp'); t=p.read_text().replace('#include "cs2fixes.h"\n','#include "cs2fixes.h"\n#include <khook.hpp>\n',1)
+          d='''using ClientActiveHook = KHook::Virtual<IServerGameClients, void, CPlayerSlot, bool, const char *, uint64>;
           using StartupServerHook = KHook::Virtual<INetworkServerService, void, const GameSessionConfiguration_t&, ISource2WorldSession*, const char *>;
-          static KHook::Return<void> OnClientActive(IServerGameClients *, CPlayerSlot slot, bool loadGame, const char *name, uint64 xuid) { g_CS2Fixes.Hook_ClientActive(slot, loadGame, name, xuid); return { KHook::Action::Ignore }; }
-          static KHook::Return<void> OnStartupServer(INetworkServerService *, const GameSessionConfiguration_t &config, ISource2WorldSession *session, const char *mapName) { g_CS2Fixes.Hook_StartupServer(config, session, mapName); return { KHook::Action::Ignore }; }
+          static KHook::Return<void> OnClientActive(IServerGameClients *, CPlayerSlot s, bool l, const char *n, uint64 x) { g_CS2Fixes.Hook_ClientActive(s,l,n,x); return {KHook::Action::Ignore}; }
+          static KHook::Return<void> OnStartupServer(INetworkServerService *, const GameSessionConfiguration_t &c, ISource2WorldSession *s, const char *m) { g_CS2Fixes.Hook_StartupServer(c,s,m); return {KHook::Action::Ignore}; }
           static ClientActiveHook g_clientActiveHook(&IServerGameClients::ClientActive, OnClientActive, nullptr);
           static StartupServerHook g_startupServerHook(&INetworkServerService::StartupServer, OnStartupServer, nullptr);'''
-          text, count = re.subn(r'SH_DECL_HOOK4_void\([^;]+;\s*SH_DECL_HOOK3_void\([^;]+;', declarations, text, count=1, flags=re.S)
-          if count != 1: raise SystemExit('SourceHook declarations were not found')
-          text, count = re.subn(r'SH_ADD_HOOK\(IServerGameClients,[^;]+;\s*SH_ADD_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Add(g_pSource2GameClients);\n\tg_startupServerHook.Add(g_pNetworkServerService);', text, count=1, flags=re.S)
-          if count != 1: raise SystemExit('SourceHook add calls were not found')
-          text, count = re.subn(r'SH_REMOVE_HOOK\(IServerGameClients,[^;]+;\s*SH_REMOVE_HOOK\(INetworkServerService,[^;]+;', 'g_clientActiveHook.Remove(g_pSource2GameClients);\n\tg_startupServerHook.Remove(g_pNetworkServerService);', text, count=1, flags=re.S)
-          if count != 1: raise SystemExit('SourceHook remove calls were not found')
-          text, count = re.subn(r'\n\s*if \(g_iCGamePlayerEquipUseId != -1\)\s*\n\s*SH_REMOVE_HOOK_ID\(g_iCGamePlayerEquipUseId\);', '', text, count=1)
-          if count != 1: raise SystemExit('Legacy SourceHook ID cleanup was not found')
-          source.write_text(text)
+          t,c=re.subn(r'SH_DECL_HOOK4_void\([^;]+;\s*SH_DECL_HOOK3_void\([^;]+;',d,t,1,flags=re.S)
+          if c!=1: raise SystemExit('SourceHook declarations were not found')
+          t,c=re.subn(r'SH_ADD_HOOK\(IServerGameClients,[^;]+;\s*SH_ADD_HOOK\(INetworkServerService,[^;]+;','g_clientActiveHook.Add(g_pSource2GameClients);\n\tg_startupServerHook.Add(g_pNetworkServerService);',t,1,flags=re.S)
+          if c!=1: raise SystemExit('SourceHook add calls were not found')
+          t,c=re.subn(r'SH_REMOVE_HOOK\(IServerGameClients,[^;]+;\s*SH_REMOVE_HOOK\(INetworkServerService,[^;]+;','g_clientActiveHook.Remove(g_pSource2GameClients);\n\tg_startupServerHook.Remove(g_pNetworkServerService);',t,1,flags=re.S)
+          if c!=1: raise SystemExit('SourceHook remove calls were not found')
+          t,c=re.subn(r'\n\s*if \(g_iCGamePlayerEquipUseId != -1\)\s*\n\s*SH_REMOVE_HOOK_ID\(g_iCGamePlayerEquipUseId\);','',t,1)
+          if c!=1: raise SystemExit('Legacy SourceHook ID cleanup was not found')
+          p.write_text(t)
           PY
+
       - name: Install AMBuild and clang
         shell: bash
         run: |
           set +e
-          { set -x; export DEBIAN_FRONTEND=noninteractive; apt-get update; apt-get install -y --no-install-recommends clang-16 python3-setuptools; ln -sf /usr/bin/clang-16 /usr/bin/clang; ln -sf /usr/bin/clang++-16 /usr/bin/clang++; if [ ! -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" ]; then rm -rf "$GITHUB_WORKSPACE/ambuild-source"; git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"; fi; test -f "$GITHUB_WORKSPACE/ambuild-source/setup.py"; cd "$GITHUB_WORKSPACE/ambuild-source"; python3 setup.py install --user; test -x "$HOME/.local/bin/ambuild"; echo "$HOME/.local/bin" >> "$GITHUB_PATH"; } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
+          { apt-get update; apt-get install -y --no-install-recommends clang-16 python3-setuptools; ln -sf /usr/bin/clang-16 /usr/bin/clang; ln -sf /usr/bin/clang++-16 /usr/bin/clang++; test -f "$GITHUB_WORKSPACE/ambuild-source/setup.py" || { rm -rf "$GITHUB_WORKSPACE/ambuild-source"; git clone --depth 1 https://github.com/alliedmodders/ambuild.git "$GITHUB_WORKSPACE/ambuild-source"; }; cd "$GITHUB_WORKSPACE/ambuild-source"; python3 setup.py install --user; test -x "$HOME/.local/bin/ambuild"; echo "$HOME/.local/bin" >> "$GITHUB_PATH"; } 2>&1 | tee "$GITHUB_WORKSPACE/install-build-tools.log"
           exit ${PIPESTATUS[0]}
+
       - name: Build package
         working-directory: CS2Fixes-RampBugFix
         shell: bash
         run: |
           set +e
-          { export PATH="$HOME/.local/bin:$PATH"; echo '=== env ==='; pwd; echo "PATH=$PATH"; echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"; echo "HL2SDKCS2=$HL2SDKCS2"; rm -rf build; mkdir -p build; cd build; python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64; command -v ambuild; ambuild; echo '=== all generated native files ==='; find . -type f -size +1k -print -exec file {} ';' -exec sha256sum {} ';'; echo '=== locate RampBugFix ELF ==='; while IFS= read -r candidate; do if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then echo "Using native binary: $candidate"; mkdir -p package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64; cp "$candidate" package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; break; fi; done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print); echo '=== package contents ==='; find package -maxdepth 8 -type f -print -exec file {} ';' -exec sha256sum {} ';'; test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'; tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .; sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256; tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
+          { export PATH="$HOME/.local/bin:$PATH"; rm -rf build; mkdir -p build; cd build; python3 ../configure.py --enable-optimize --sdks cs2 --targets=x86_64; command -v ambuild; ambuild; find . -type f -size +1k -print -exec file {} ';' -exec sha256sum {} ';'; while IFS= read -r candidate; do if file "$candidate" | grep -q 'ELF 64-bit.*x86-64'; then mkdir -p package/addons/cs2fixes-rampbug/bin/linuxsteamrt64; cp "$candidate" package/addons/cs2fixes-rampbug/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; break; fi; done < <(find . -path './package' -prune -o -type f \( -name 'cs2fixes-rampbugfix' -o -name 'cs2fixes-rampbugfix.so' \) -print); find package -maxdepth 8 -type f -print -exec file {} ';' -exec sha256sum {} ';'; test -s package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so; file package/addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so | grep -E 'ELF 64-bit.*x86-64'; tar -C package -czf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz .; sha256sum ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | tee ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256; tar -tzf ../CS2Fixes-RampBugFix-abi18-steamrt.tar.gz | sed 's#^\./##' | grep -Fx 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; } 2>&1 | tee "$GITHUB_WORKSPACE/rampbugfix-build.log"
           exit ${PIPESTATUS[0]}
-      - name: Upload full build diagnostics
+
+      - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -115,8 +91,9 @@ jobs:
             ${{ github.workspace }}/CS2Fixes-RampBugFix/build
           if-no-files-found: warn
           retention-days: 7
-      - name: Commit artifact or failure log
+
+      - name: Commit artifact or logs
         if: always()
         shell: bash
         run: |
-          buildrepo="$GITHUB_WORKSPACE/buildrepo"; mkdir -p "$buildrepo/artifacts"; rm -f "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256" "$buildrepo/artifacts/rampbugfix-build.log" "$buildrepo/artifacts/install-build-tools.log"; archive=$(find "$GITHUB_WORKSPACE/CS2Fixes-RampBugFix" -type f -name 'CS2Fixes-RampBugFix-abi18-steamrt.tar.gz' -size +1k | head -n1); if [ -n "$archive" ] && tar -tzf "$archive" | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then cp "$archive" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz"; cp "${archive}.sha256" "$buildrepo/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256"; fi; if [ -s "$GITHUB_WORKSPACE/rampbugfix-build.log" ]; then cp "$GITHUB_WORKSPACE/rampbugfix-build.log" "$buildrepo/artifacts/rampbugfix-build.log"; fi; if [ -s "$GITHUB_WORKSPACE/install-build-tools.log" ]; then cp "$GITHUB_WORKSPACE/install-build-tools.log" "$buildrepo/artifacts/install-build-tools.log"; fi; git -C "$buildrepo" config user.name 'github-actions[bot]'; git -C "$buildrepo" config user.email '41898282+github-actions[bot]@users.noreply.github.com'; git -C "$buildrepo" add -f artifacts || true; if git -C "$buildrepo" diff --cached --quiet; then echo 'No artifact/log changes to commit.'; else git -C "$buildrepo" commit -m 'Publish RampbugFix ABI18 build output'; git -C "$buildrepo" pull --rebase origin main; git -C "$buildrepo" push; fi
+          r="$GITHUB_WORKSPACE/buildrepo"; mkdir -p "$r/artifacts"; rm -f "$r/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz" "$r/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256" "$r/artifacts/rampbugfix-build.log" "$r/artifacts/install-build-tools.log"; a=$(find "$GITHUB_WORKSPACE/CS2Fixes-RampBugFix" -type f -name 'CS2Fixes-RampBugFix-abi18-steamrt.tar.gz' -size +1k | head -n1); if [ -n "$a" ] && tar -tzf "$a" | sed 's#^\./##' | grep -Fxq 'addons/cs2fixes-rampbugfix/bin/linuxsteamrt64/cs2fixes-rampbugfix.so'; then cp "$a" "$r/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz"; cp "${a}.sha256" "$r/artifacts/CS2Fixes-RampBugFix-abi18-steamrt.tar.gz.sha256"; fi; [ ! -s "$GITHUB_WORKSPACE/rampbugfix-build.log" ] || cp "$GITHUB_WORKSPACE/rampbugfix-build.log" "$r/artifacts/rampbugfix-build.log"; [ ! -s "$GITHUB_WORKSPACE/install-build-tools.log" ] || cp "$GITHUB_WORKSPACE/install-build-tools.log" "$r/artifacts/install-build-tools.log"; git -C "$r" config user.name 'github-actions[bot]'; git -C "$r" config user.email '41898282+github-actions[bot]@users.noreply.github.com'; git -C "$r" add -f artifacts; if ! git -C "$r" diff --cached --quiet; then git -C "$r" commit -m 'Publish RampbugFix ABI18 build output'; git -C "$r" pull --rebase origin main; git -C "$r" push; fi
